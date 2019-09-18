@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Open the wall">
+    <meta name="author" content="twopie">
+    <link rel="icon" href="favicon.ico">
+    <title>Open the wall</title>
+    <style>
+body {
+  font-family: Helvetica, arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #666666;
+}
+.container {
+  text-align: center;
+}
+
+.flashes {
+  color: white;
+  text-align: center;
+}
+
+.error {
+  background: #dc3545;
+}
+
+.success {
+  background: #28a745;
+}
+
+.warn {
+  background: #ffc107;
+}
+
+.sesame {
+  margin-top: 2rem;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  max-width: 180px;
+}
+
+.button {
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  min-width: 186px;
+  color: white;
+  background-color: #ffc107;
+  border: 0;
+  cursor: pointer;
+}
+
+.section {
+}
+
+.records {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+thead {
+  background: #e8e8e8;
+}
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+          <div class="flashes {{ category }}">
+           {{ message }}
+          </div>
+        {% endfor %}
+      {% endwith %}
+      <div class="section">
+        <form action="/" method="post">
+          <div>
+            <input class="sesame" name="sesame" placeholder="code">
+          </div>
+          <div>
+            <button class="button" type="submit">Sesame Opens</button>
+          </div>
+        </form>
+      </div>
+      <div class="section">
+        {% if records %}
+        <table class="records">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>From</th>
+              <th>To</th>
+            </tr>
+          </thead>
+          </tbody>
+          {% for record in records%}
+            <tr>
+              <td>{{ record[0] }}</td>
+              <td>{{ record[1] }}</td>
+              <td>{{ record[2] }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>
