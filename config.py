@@ -1,5 +1,5 @@
 DEBUG = True
-SECRET_KEY = "some_secret"
+SECRET_KEY = 'some_secret'
 
 SESAME_OPENS = 'xxxx'
 

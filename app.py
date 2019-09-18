@@ -1,4 +1,8 @@
 # -*-: coding: utf-8 -*-
+# Copyright 2019 Euclidr.  All rights reserved.
+# Use of this source code is governed by a MIT style
+# license that can be found in the LICENSE file.
+
 import os
 from datetime import datetime, timedelta
 from flask import Flask, request, flash, redirect, abort,\
@@ -43,17 +47,18 @@ def can_modify_now():
         min_delta = timedelta(seconds=1800)
         return delta > min_delta
     except Exception as e:
-        print("convert time error: {}".format(e))
+        app.logger.error('convert time error: {}'.format(e))
     return True
 
 
 @app.route('/', methods=['POST'])
 def sesame_opens():
+    '''change lightsail's public ip'''
     # validate sesame code
     data = request.json or request.form
     if not data:
         abort(403)
-    sesame = str(data.get("sesame", ""))
+    sesame = str(data.get('sesame', ''))
     if sesame != app.config['SESAME_OPENS']:
         abort(403)
 
@@ -82,7 +87,7 @@ def sesame_opens():
         with open(app.config['RECORD_BASE_PATH'] +
                   'change_records.log', 'a') as f:
             f.write('{}\t{}\t{}\n'.format(
-                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                 old,
                 new
             ))
@@ -92,6 +97,8 @@ def sesame_opens():
 
 @app.route('/', methods=['GET'])
 def index():
+    '''show the form and recent change records
+    '''
     records = []
     if not os.path.isfile(app.config['RECORD_BASE_PATH'] +
                           'change_records.log'):
