@@ -13,6 +13,7 @@
 .idea
 .lock-wscript
 .vscode
+.*
 
 __pycache__
 *.py[cod]
